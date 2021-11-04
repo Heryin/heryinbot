@@ -56,7 +56,7 @@ client.on("message", (msg) => {
     if(msg.messageText === `${botPrefix}bot`){
         client.say(msg.channelName, "I'm a smol bot made in Node.js by @Heryin, no idea what my purpose is yet, but for now he's learning to make a bot Okayge");
     }
-    if(msg.displayName === "pajbot" && msg.messageText === "pajaS 🚨 ALERT"){
-        client.say(msg.channelName, "PAJAS 🚨 O JA PIERDOLE")
+    if(msg.displayName === "pajbot" && msg.messageText === "pajaS 🚨 ALERT" && msg.channelName === "pajlada"){
+        client.say(msg.channelName, "DANKOMEGA 🚨 O JA PIERDOLE")
     }
 });
