@@ -3,13 +3,7 @@ let twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 
 function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
     const remoteChannel = usedCommandArguments[0].substring(1);
-    let isPrivilaged = false;
-    for(let i=0; i<privilagedUsersID.length; i++){
-        if(msg.senderUserID === privilagedUsersID[i]){
-            isPrivilaged = true;
-        }
-    }
-    if(msg.senderUserID === botOwnerID || isPrivilaged){
+    if(msg.senderUserID === botOwnerID || privilagedUsersID.includes(msg.senderUserID)){
         const checkLine = usedCommandArguments.join(' ');
         if(twitchChannels.indexOf(remoteChannel) !== -1 && msg.messageText !== 'h!say'){
             const theLine = usedCommandArguments.splice(1).join(' ');
