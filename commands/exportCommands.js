@@ -2,6 +2,7 @@ const ping = require('./ping/ping.js');
 const bot = require('./bot/bot.js');
 const pepega = require('./pepega/pepega.js');
 const say = require('./say/say.js');
+const help = require('./help/help.js');
 
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
         ping,
         bot,
         pepega,
-        say
+        say,
+        help
     ]
 };

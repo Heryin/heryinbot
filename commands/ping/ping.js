@@ -1,4 +1,4 @@
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID){
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
     client.say(msg.channelName, `@${msg.displayName}, Pong! FeelsDankMan`);
 }
 

@@ -1,4 +1,4 @@
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID){
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
     client.say(msg.channelName, `@${msg.displayName}, I'm a smol bot made in Node.js by @${botOwner}, no idea what my purpose is yet, for now he's learning to make a bot FeelsDankMan`);
 }
 

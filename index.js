@@ -77,5 +77,5 @@ client.on('PRIVMSG', (msg) => {
   }
 
   // call the command's function
-  command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID);
+  command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands);
 });

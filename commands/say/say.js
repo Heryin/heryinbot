@@ -1,7 +1,7 @@
 require('dotenv').config();
 let twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID){
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
     const remoteChannel = usedCommandArguments[0].substring(1);
     let isPrivilaged = false;
     for(let i=0; i<privilagedUsersID.length; i++){
