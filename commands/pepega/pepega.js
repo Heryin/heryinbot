@@ -1,7 +1,6 @@
 const fs = require("fs");
 
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
-    let singleLine;
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage){
     fs.readFile('./commands/pepega/list', 'utf-8', function(err, data){
         if(err){
             throw err;
@@ -9,9 +8,15 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
         //load data into an array
         let allLines = data.split('\n');
         //select a random line
-        singleLine = allLines[Math.floor(Math.random()*allLines.length)];
+        let message = allLines[Math.floor(Math.random()*allLines.length)];
         //send the line into the chat
-        client.say(msg.channelName, `@${msg.displayName}, ${singleLine}`);
+        if(message !== lastMessage){
+            client.say(msg.channelName, `@${msg.displayName}, ${message}`);
+        }
+        else{
+            message += ' \u{000e0000}';
+            client.say(msg.channelName, `@${msg.displayName}, ${message}`);
+        }
     });
 };
 

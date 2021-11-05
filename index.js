@@ -22,16 +22,14 @@ const privilagedUsersID = process.env.PRIVILAGED_USERS_ID.split(' ');
 const twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 
 // same message, 1 second slowmode and connection limiting
-client.use(new AlternateMessageModifier(client));
 client.use(new SlowModeRateLimiter(client, 3));
 client.use(new ConnectionRateLimiter(client));
 SlowModeRateLimiter.GLOBAL_SLOW_MODE_COOLDOWN = 1;
 
-
 // message sent to a testing channel about the bot being up
 client.on('ready', () => 
     console.log(`Successfully connected to chat`), 
-    client.say(wakeUpChannel, `${botDisplayName} woke up! FeelsDankMan`),
+    client.say(wakeUpChannel, `${botDisplayName} woke up! FeelsDankMan`)
 );
 
 client.on('close', (error) => {
@@ -50,7 +48,12 @@ client.on('PRIVMSG', (msg) => {
 });
 
 // commands
+let lastMessage;
 client.on('PRIVMSG', (msg) => {
+  // save bot's last message
+  if(msg.displayName === botDisplayName){
+    lastMessage = msg.messageText;
+  }
 
   // pajaS alert for #pajlada, based on pajbot's timer, as a meme response
   if(msg.displayName === 'pajbot' && msg.messageText === 'pajaS 🚨 ALERT' && msg.channelName === 'pajlada'){
@@ -77,5 +80,5 @@ client.on('PRIVMSG', (msg) => {
   }
 
   // call the command's function
-  command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands);
+  command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage);
 });

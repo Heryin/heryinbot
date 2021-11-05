@@ -1,5 +1,9 @@
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
-    client.say(msg.channelName, `@${msg.displayName}, I'm a smol bot made in Node.js by @${botOwner}, no idea what my purpose is yet, for now he's learning to make a bot FeelsDankMan`);
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage){
+    const message = `@${msg.displayName}, I'm a smol bot made in Node.js by @${botOwner}, no idea what my purpose is yet, for now he's learning to make a bot FeelsDankMan`;
+    if(message === lastMessage){
+        message += ' \u{000e0000}';
+    }
+    client.say(msg.channelName, message);
 }
 
 command.commandName = 'bot';

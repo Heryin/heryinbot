@@ -1,6 +1,13 @@
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage){
     let commandList = commands.map(command => command.commandName).join(', ');
-    client.say(msg.channelName, `@${msg.displayName}, Available commands: ${commandList}`);
+    let message = `@${msg.displayName}, Available commands: ${commandList}`;
+    if(message !== lastMessage){
+        client.say(msg.channelName, message);
+    }
+    else{
+        message += ' \u{000e0000}';
+        client.say(msg.channelName, message);
+    }
 }
 
 command.commandName = 'help';

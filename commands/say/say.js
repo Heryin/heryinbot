@@ -1,17 +1,48 @@
 require('dotenv').config();
 let twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage){
     const remoteChannel = usedCommandArguments[0].substring(1);
     if(msg.senderUserID === botOwnerID || privilagedUsersID.includes(msg.senderUserID)){
-        const checkLine = usedCommandArguments.join(' ');
         if(twitchChannels.indexOf(remoteChannel) !== -1 && msg.messageText !== 'h!say'){
-            const theLine = usedCommandArguments.splice(1).join(' ');
-            client.say(remoteChannel, `${theLine}`);
+            if(senderUserID === botOwnerID){
+                const message = usedCommandArguments.slice(1).join(' ');
+
+                if(message.startsWith('/me')){
+                    if(message === lastMessage){
+                        message += ' \u{000e0000}';
+                    }
+                    client.say(remoteChannel, message);
+                }
+                else{
+                    if(message === lastMessage){
+                        message += ' \u{000e0000}';
+                    }
+                    client.say(remoteChannel, `${message}`);
+                }
+            }
+            else{
+                const message = usedCommandArguments.join(' ');
+                if(message.startsWith('/me')){
+                    if(message === lastMessage){
+                        message += ' \u{000e0000}';
+                    }
+                    client.say(remoteChannel, `${message}`);
+                }
+                else{
+                    if(message === lastMessage){
+                        message += ' \u{000e0000}';
+                    }
+                    client.say(remoteChannel, `${message}`);
+                }
+            }
         }
-        else if(checkLine !== undefined && checkLine !== null && checkLine !== ' ' && msg.messageText !== 'h!say'){
-            const theLine = usedCommandArguments.join(' ');
-            client.say(msg.channelName, `${theLine}`);
+        else if(msg.messageText !== 'h!say'){
+            const message = usedCommandArguments.join(' ');
+            if(message === lastMessage){
+                message += ' \u{000e0000}';
+            }
+            client.say(msg.channelName, `${message}`);
         }
     }
 }

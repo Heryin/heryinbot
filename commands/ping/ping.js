@@ -1,5 +1,12 @@
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands){
-    client.say(msg.channelName, `@${msg.displayName}, Pong! FeelsDankMan`);
+function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage){
+    let message = `@${msg.displayName}, Pong! FeelsDankMan`
+    if(message !== lastMessage){
+        client.say(msg.channelName, message);
+    }
+    else{
+        message += ' \u{000e0000}';
+        client.say(msg.channelName, message);
+    }
 }
 
 command.commandName = 'ping';
