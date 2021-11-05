@@ -4,18 +4,22 @@ const { commands } = require('./commands/exportCommands.js');
 
 // bot config
 const client = new ChatClient({
-    username: 'heryinbot',
+    username: process.env.BOT_USERNAME,
     password: process.env.TWITCH_OAUTH_TOKEN,
     rateLimits: 'default',
     maxChannelCountPerConnection: 15
   });
 
-const botDisplayName = "HeryinBot";
-const botOwner = 'Heryin';
-const botPrefix = 'h!';
+// some data about the bot, the owner and privilaged users
+const botDisplayName = process.env.BOT_DISPLAY_NAME;
+const botOwner = process.env.BOT_OWNER;
+const botOwnerID = process.env.BOT_OWNER_ID;
+const botPrefix = process.env.BOT_PREFIX;
+const wakeUpChannel = process.env.WAKE_UP_CHANNEL;
+const privilagedUsersID = process.env.PRIVILAGED_USERS_ID.split(' ');
 
 // the list of channels the bot will join
-let twitchChannels = ['heryin', 'donkey_deleter', 'zneix']
+const twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 
 // same message, 1 second slowmode and connection limiting
 client.use(new AlternateMessageModifier(client));
@@ -27,7 +31,7 @@ SlowModeRateLimiter.GLOBAL_SLOW_MODE_COOLDOWN = 1;
 // message sent to a testing channel about the bot being up
 client.on('ready', () => 
     console.log(`Successfully connected to chat`), 
-    client.say('donkey_deleter', 'HeryinBot woke up! FeelsDankMan'),
+    client.say(wakeUpChannel, `${botDisplayName} woke up! FeelsDankMan`),
 );
 
 client.on('close', (error) => {
@@ -48,30 +52,30 @@ client.on('PRIVMSG', (msg) => {
 // commands
 client.on('PRIVMSG', (msg) => {
 
-  //pajaS alert for #pajlada, based on pajbot's timer, as a meme response
+  // pajaS alert for #pajlada, based on pajbot's timer, as a meme response
   if(msg.displayName === 'pajbot' && msg.messageText === 'pajaS 🚨 ALERT' && msg.channelName === 'pajlada'){
     client.me(msg.channelName, "DANKOMEGA 🚨 O JA PIERDOLE");
   }
 
-  //check if prefix is used or if the bot is the author
+  // check if prefix is used or if the bot is the author
   const hasPrefix = msg.messageText.startsWith(botPrefix);
 
-  if(!hasPrefix || msg.displayName === botDisplayName){
+  if(!hasPrefix || msg.senderUsername === botDisplayName){
     return
   }
 
-  //prefix used
+  // prefix used
 
   const msgArraySplit = msg.messageText.substring(botPrefix.length).split(' ');
   const usedCommand = msgArraySplit[0];
   const usedCommandArguments = msgArraySplit.slice(1);
   const command = commands.find(command => command.commandName === usedCommand);
 
-  //check if that command exists
+  // check if that command exists
   if(command === undefined){
     return;
   }
 
-  //call the command's function
-  command(client, msg);
+  // call the command's function
+  command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID);
 });
