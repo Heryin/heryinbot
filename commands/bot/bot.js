@@ -7,6 +7,6 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
 }
 
 command.commandName = 'bot';
-command.description = 'A short note about the bot, the owner and the language it was written in.'
+command.description = 'A short note about the bot, the owner and the language it was written in.';
 
 module.exports = command;
