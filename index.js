@@ -17,14 +17,13 @@ const botOwnerID = process.env.BOT_OWNER_ID;
 const botPrefix = process.env.BOT_PREFIX;
 const wakeUpChannel = process.env.WAKE_UP_CHANNEL;
 const privilagedUsersID = process.env.PRIVILAGED_USERS_ID.split(' ');
+const globalCooldown = 1000;
 
 // the list of channels the bot will join
 const twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 
-// same message, 1 second slowmode and connection limiting
-client.use(new SlowModeRateLimiter(client, 3));
+// connection limiting
 client.use(new ConnectionRateLimiter(client));
-SlowModeRateLimiter.GLOBAL_SLOW_MODE_COOLDOWN = 1;
 
 // message sent to a testing channel about the bot being up
 client.on('ready', () => 
@@ -49,9 +48,12 @@ client.on('PRIVMSG', (msg) => {
 
 // commands
 let lastMessage;
+let onGlobalCooldown = false;
 client.on('PRIVMSG', (msg) => {
   // save bot's last message
   if(msg.displayName === botDisplayName){
+    onGlobalCooldown = true;
+    setTimeout(() => { onGlobalCooldown = false;},  globalCooldown); 
     lastMessage = msg.messageText;
   }
 
@@ -59,6 +61,11 @@ client.on('PRIVMSG', (msg) => {
   if(msg.displayName === 'pajbot' && msg.messageText === 'pajaS 🚨 ALERT' && msg.channelName === 'pajlada'){
     client.me(msg.channelName, "DANKOMEGA 🚨 O JA PIERDOLE");
   }
+
+    // if the global cooldown is on, go back, I should add some queue later on
+    if(onGlobalCooldown){
+      return;
+    }
 
   // check if prefix is used or if the bot is the author
   const hasPrefix = msg.messageText.startsWith(botPrefix);
@@ -81,4 +88,8 @@ client.on('PRIVMSG', (msg) => {
 
   // call the command's function
   command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage);
+  if(msg.displayName === botDisplayName){
+    onGlobalCooldown = true;
+    setTimeout(() => { onGlobalCooldown = false;},  globalCooldown); 
+  }
 });
