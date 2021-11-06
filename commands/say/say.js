@@ -4,14 +4,12 @@ let botPrefix = process.env.BOT_PREFIX;
 
 function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage) {
 
-    const remoteChannel = usedCommandArguments[0].substring(1);
     const checkForMe = usedCommandArguments[0];
     const meMessage = checkForMe.startsWith('/me');
 
-    if (msg.senderUserID === botOwnerID || privilagedUsersID.includes(msg.senderUserID)) {
-        if (twitchChannels.includes(remoteChannel) && msg.messageText !== `${botPrefix}say`) {
-
-            if (msg.senderUserID === botOwnerID) {
+    if (msg.senderUserID === botOwnerID || privilagedUsersID.includes(msg.senderUserID) && msg.messageText !== `${botPrefix}say`) {
+        const remoteChannel = usedCommandArguments[0].substring(1);
+        if (twitchChannels.includes(remoteChannel) && msg.senderUserID === botOwnerID) {
 
                 let message = usedCommandArguments.slice(1).join(' ');
 
@@ -19,30 +17,19 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
                     message += ' \u{000e0000}';
                 }
                 client.privmsg(remoteChannel, message);
-            }
         }
 
-        else {
-            if (msg.senderUserID === botOwnerID) {
+            else if(msg.senderUserID === botOwnerID){
 
                 let message = usedCommandArguments.join(' ');
-                let messageSliced = usedCommandArguments.slice(1).join(' ');
 
-                if (meMessage) {
-                    if (messageSliced === lastMessage) {
-                        messageSliced += ' \u{000e0000}';
-                    }
-                    client.me(msg.channelName, messageSliced);
-                }
-                else {
                     if (message === lastMessage) {
                         message += ' \u{000e0000}';
                     }
-                    client.say(msg.channelName, message);
-                }
+                    client.privmsg(msg.channelName, message);
             }
 
-            else {
+            else if(!twitchChannels.includes(remoteChannel) || twitchChannels.includes(remoteChannel)){
 
                 let message = usedCommandArguments.join(' ');
                 let messageSliced = usedCommandArguments.slice(1).join(' ');
@@ -61,8 +48,6 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
                 }
             }
         }
-
-    }
 }
 
 command.commandName = 'say';
