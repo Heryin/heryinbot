@@ -20,48 +20,48 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
                 }
                 client.privmsg(remoteChannel, message);
             }
+        }
 
+        else {
+            if (msg.senderUserID === botOwnerID) {
+
+                let message = usedCommandArguments.join(' ');
+                let messageSliced = usedCommandArguments.slice(1).join(' ');
+
+                if (meMessage) {
+                    if (messageSliced === lastMessage) {
+                        messageSliced += ' \u{000e0000}';
+                    }
+                    client.me(msg.channelName, messageSliced);
+                }
+                else {
+                    if (message === lastMessage) {
+                        message += ' \u{000e0000}';
+                    }
+                    client.say(msg.channelName, message);
+                }
+            }
 
             else {
-                if (msg.senderUserID === botOwnerID) {
 
-                    let message = usedCommandArguments.join(' ');
-                    let messageSliced = usedCommandArguments.slice(1).join(' ');
+                let message = usedCommandArguments.join(' ');
+                let messageSliced = usedCommandArguments.slice(1).join(' ');
 
-                    if (meMessage) {
-                        if (messageSliced === lastMessage) {
-                            messageSliced += ' \u{000e0000}';
-                        }
-                        client.me(msg.channelName, messageSliced);
+                if (meMessage) {
+                    if (messageSliced === lastMessage) {
+                        messageSliced += ' \u{000e0000}';
                     }
-                    else {
-                        if (message === lastMessage) {
-                            message += ' \u{000e0000}';
-                        }
-                        client.say(msg.channelName, message);
-                    }
+                    client.me(msg.channelName, `${messageSliced}`);
                 }
-
                 else {
-
-                    let message = usedCommandArguments.join(' ');
-                    let messageSliced = usedCommandArguments.slice(1).join(' ');
-
-                    if (meMessage) {
-                        if (messageSliced === lastMessage) {
-                            messageSliced += ' \u{000e0000}';
-                        }
-                        client.me(msg.channelName, `${messageSliced}`);
+                    if (message === lastMessage) {
+                        message += ' \u{000e0000}';
                     }
-                    else {
-                        if (message === lastMessage) {
-                            message += ' \u{000e0000}';
-                        }
-                        client.say(msg.channelName, `${message}`);
-                    }
+                    client.say(msg.channelName, `${message}`);
                 }
             }
         }
+
     }
 }
 
