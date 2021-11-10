@@ -1,4 +1,4 @@
-function command(client, msg, lastMessage){
+function command({client: client, msg: msg, lastMessage: lastMessage}){
     const message = `@${msg.displayName}, I'm a smol bot made in Node.js by @Heryin, no idea what my purpose is yet, \
                                           for now he's learning to make a bot. GitHub link: https://github.com/heryin/heryinbot FeelsDankMan`;
     if(message === lastMessage){

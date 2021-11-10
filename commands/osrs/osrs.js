@@ -1,6 +1,6 @@
 const https = require('https');
 
-async function command(client, msg, arguments, lastMessage) {
+async function command({client: client, msg: msg, arguments: arguments, lastMessage: lastMessage}) {
 
     const playername = arguments.join(' ');
 
@@ -16,7 +16,15 @@ async function command(client, msg, arguments, lastMessage) {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             result = JSON.parse(data);
-            console.log(result.data.skills[0].level);
+            if(result.statusCode === 404 || !resp || !result){
+                let message = `@${msg.displayName}, No data was found for character name "${playername}"!`;
+                if(message === lastMessage){
+                    message += ' \u{000e0000}';
+                }
+                client.say(msg.channelName, message);
+                return;
+            }
+
             let message = `@${msg.displayName}, Stats for character ${playername}: 🏆 ${result.data.skills[0].level} ⚔ ${result.data.skills[1].level} \
              ✊ ${result.data.skills[2].level} 🛡 ${result.data.skills[3].level} 🏹 ${result.data.skills[4].level} ✨ ${result.data.skills[5].level} \
               🧙 ${result.data.skills[6].level} ➰ ${result.data.skills[7].level} 🏡 ${result.data.skills[8].level} ♥ ${result.data.skills[9].level} \

@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-function command(client, msg, lastMessage){
+function command({client: client, msg: msg, lastMessage: lastMessage}){
     fs.readFile('./commands/pepega/list', 'utf-8', function(err, data){
         if(err){
             throw err;

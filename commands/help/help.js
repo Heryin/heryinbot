@@ -1,4 +1,4 @@
-function command(client, msg, commands, lastMessage){
+function command({client: client, msg: msg, commands: commands, lastMessage: lastMessage}){
     let commandList = commands.map(command => command.commandName).join(', ');
     let message = `@${msg.displayName}, Available commands: ${commandList}`;
     if(message !== lastMessage){

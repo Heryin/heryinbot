@@ -88,14 +88,14 @@ client.on('PRIVMSG', (msg) => {
   }
 
   let commandOptions = {
-    client,
-    msg,
+    client: client,
+    msg: msg,
     arguments: usedCommandArguments,
-    botOwner,
-    botOwnerID,
-    privilagedUsersID,
-    commands,
-    lastMessage
+    botOwner: botOwner,
+    botOwnerID: botOwnerID,
+    privilagedUsersID: privilagedUsersID,
+    commands: commands,
+    lastMessage: lastMessage
   }
 
   // call the command's function

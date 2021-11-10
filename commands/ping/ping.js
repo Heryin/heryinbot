@@ -1,4 +1,4 @@
-function command(client, msg, lastMessage){
+function command({client: client, msg: msg, lastMessage: lastMessage}){
     let message = `@${msg.displayName}, Pong! FeelsDankMan`
     if(message !== lastMessage){
         message += ' \u{000e0000}';

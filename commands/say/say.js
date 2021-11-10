@@ -2,7 +2,7 @@ require('dotenv').config();
 let twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 let botPrefix = process.env.BOT_PREFIX;
 
-function command(client, msg, arguments, botOwnerID, privilagedUsersID, lastMessage) {
+function command({client: client, msg: msg, arguments: arguments, botOwnerID: botOwnerID, privilagedUsersID: privilagedUsersID, lastMessage: lastMessage}) {
 
     const checkForMe = arguments[0];
     const meMessage = checkForMe.startsWith('/me');
