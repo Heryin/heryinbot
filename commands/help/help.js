@@ -1,4 +1,4 @@
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage){
+function command(client, msg, commands, lastMessage){
     let commandList = commands.map(command => command.commandName).join(', ');
     let message = `@${msg.displayName}, Available commands: ${commandList}`;
     if(message !== lastMessage){

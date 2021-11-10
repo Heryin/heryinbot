@@ -2,16 +2,16 @@ require('dotenv').config();
 let twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
 let botPrefix = process.env.BOT_PREFIX;
 
-function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage) {
+function command(client, msg, arguments, botOwnerID, privilagedUsersID, lastMessage) {
 
-    const checkForMe = usedCommandArguments[0];
+    const checkForMe = arguments[0];
     const meMessage = checkForMe.startsWith('/me');
 
     if (msg.senderUserID === botOwnerID || privilagedUsersID.includes(msg.senderUserID) && msg.messageText !== `${botPrefix}say`) {
-        const remoteChannel = usedCommandArguments[0].substring(1);
+        const remoteChannel = arguments[0].substring(1);
         if (twitchChannels.includes(remoteChannel) && msg.senderUserID === botOwnerID) {
 
-                let message = usedCommandArguments.slice(1).join(' ');
+                let message = arguments.slice(1).join(' ');
 
                 if (message === lastMessage) {
                     message += ' \u{000e0000}';
@@ -21,7 +21,7 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
 
             else if(msg.senderUserID === botOwnerID){
 
-                let message = usedCommandArguments.join(' ');
+                let message = arguments.join(' ');
 
                     if (message === lastMessage) {
                         message += ' \u{000e0000}';
@@ -31,8 +31,8 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
 
             else if(!twitchChannels.includes(remoteChannel) || twitchChannels.includes(remoteChannel)){
 
-                let message = usedCommandArguments.join(' ');
-                let messageSliced = usedCommandArguments.slice(1).join(' ');
+                let message = arguments.join(' ');
+                let messageSliced = arguments.slice(1).join(' ');
 
                 if (meMessage) {
                     if (messageSliced === lastMessage) {

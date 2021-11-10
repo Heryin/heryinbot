@@ -87,8 +87,19 @@ client.on('PRIVMSG', (msg) => {
     return;
   }
 
+  let commandOptions = {
+    client,
+    msg,
+    arguments: usedCommandArguments,
+    botOwner,
+    botOwnerID,
+    privilagedUsersID,
+    commands,
+    lastMessage
+  }
+
   // call the command's function
-  command(client, msg, usedCommandArguments, botOwner, botOwnerID, privilagedUsersID, commands, lastMessage);
+  command(commandOptions);
   if(msg.displayName === botDisplayName){
     onGlobalCooldown = true;
     setTimeout(() => { onGlobalCooldown = false;},  globalCooldown); 
