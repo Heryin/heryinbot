@@ -38,13 +38,13 @@ function command(client, msg, usedCommandArguments, botOwner, botOwnerID, privil
                     if (messageSliced === lastMessage) {
                         messageSliced += ' \u{000e0000}';
                     }
-                    client.me(msg.channelName, `${messageSliced}`);
+                    client.me(msg.channelName, `\u{000e0000} ${messageSliced}`);
                 }
                 else {
                     if (message === lastMessage) {
                         message += ' \u{000e0000}';
                     }
-                    client.say(msg.channelName, `${message}`);
+                    client.say(msg.channelName, `\u{000e0000} ${message}`);
                 }
             }
         }

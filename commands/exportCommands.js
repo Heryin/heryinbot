@@ -3,7 +3,7 @@ const bot = require('./bot/bot.js');
 const pepega = require('./pepega/pepega.js');
 const say = require('./say/say.js');
 const help = require('./help/help.js');
-
+const osrs = require('./osrs/osrs.js');
 
 module.exports = {
     commands: [
@@ -11,6 +11,7 @@ module.exports = {
         bot,
         pepega,
         say,
-        help
+        help,
+        osrs
     ]
 };

@@ -1,6 +1,5 @@
 const { ChatClient, SlowModeRateLimiter, AlternateMessageModifier, ConnectionRateLimiter } = require("dank-twitch-irc");
 require('dotenv').config();
-const { commands } = require('./commands/exportCommands.js');
 
 // bot config
 const client = new ChatClient({
@@ -47,6 +46,7 @@ client.on('PRIVMSG', (msg) => {
 });
 
 // commands
+let { commands } = require('./commands/exportCommands.js');
 let lastMessage;
 let onGlobalCooldown = false;
 client.on('PRIVMSG', (msg) => {
@@ -62,10 +62,10 @@ client.on('PRIVMSG', (msg) => {
     client.me(msg.channelName, "DANKOMEGA 🚨 O JA PIERDOLE");
   }
 
-    // if the global cooldown is on, go back, I should add some queue later on
-    if(onGlobalCooldown){
-      return;
-    }
+  // if the global cooldown is on, go back, I should add some queue later on
+  if(onGlobalCooldown){
+    return;
+  }
 
   // check if prefix is used or if the bot is the author
   const hasPrefix = msg.messageText.startsWith(botPrefix);
