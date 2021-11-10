@@ -40,16 +40,17 @@ client.on('close', (error) => {
 client.connect();
 client.joinAll(twitchChannels);
 
-// display all messages from chats in the terminal
-client.on('PRIVMSG', (msg) => {
-  console.log(`[#${msg.channelName}] ${msg.displayName}: ${msg.messageText}`);
-});
+
 
 // commands
 let { commands } = require('./commands/exportCommands.js');
 let lastMessage;
 let onGlobalCooldown = false;
 client.on('PRIVMSG', (msg) => {
+
+  // display all messages from chats in the terminal
+  console.log(`[#${msg.channelName}] ${msg.displayName}: ${msg.messageText}`);
+
   // save bot's last message
   if(msg.displayName === botDisplayName){
     onGlobalCooldown = true;
