@@ -26,12 +26,12 @@ async function command({client: client, msg: msg, arguments: arguments, lastMess
             }
 
             let message = `@${msg.displayName}, Stats for character ${playername}: 🏆 ${result.data.skills[0].level} ⚔ ${result.data.skills[1].level} \
-             ✊ ${result.data.skills[2].level} 🛡 ${result.data.skills[3].level} 🏹 ${result.data.skills[4].level} ✨ ${result.data.skills[5].level} \
-              🧙 ${result.data.skills[6].level} ➰ ${result.data.skills[7].level} 🏡 ${result.data.skills[8].level} ♥ ${result.data.skills[9].level} \
-              🏃 ${result.data.skills[10].level} 🌿 ${result.data.skills[11].level} 💰 ${result.data.skills[12].level} 🛠 ${result.data.skills[13].level} \
-              🔪 ${result.data.skills[14].level} 💀 ${result.data.skills[15].level} 🐾 ${result.data.skills[16].level} ⛏ ${result.data.skills[17].level} \
-              🔨 ${result.data.skills[18].level} 🐟 ${result.data.skills[19].level} 🍲 ${result.data.skills[20].level} 🔥 ${result.data.skills[21].level} \
-              🌳 ${result.data.skills[22].level} 🌽 ${result.data.skills[23].level} XP: ${result.data.skills[0].experience.toLocaleString('pl-PL')}`;
+             ✊ ${result.data.skills[3].level} 🛡 ${result.data.skills[2].level} 🏹 ${result.data.skills[5].level} ✨ ${result.data.skills[6].level} \
+              🧙 ${result.data.skills[7].level} ➰ ${result.data.skills[21].level} 🏡 ${result.data.skills[23].level} ♥ ${result.data.skills[4].level} \
+              🏃 ${result.data.skills[17].level} 🌿 ${result.data.skills[16].level} 💰 ${result.data.skills[18].level} 🛠 ${result.data.skills[13].level} \
+              🔪 ${result.data.skills[10].level} 💀 ${result.data.skills[19].level} 🐾 ${result.data.skills[22].level} ⛏ ${result.data.skills[15].level} \
+              🔨 ${result.data.skills[14].level} 🐟 ${result.data.skills[11].level} 🍲 ${result.data.skills[8].level} 🔥 ${result.data.skills[12].level} \
+              🌳 ${result.data.skills[9].level} 🌽 ${result.data.skills[20].level} XP: ${result.data.skills[0].experience.toLocaleString('pl-PL')}`;
             if(message === lastMessage){
                 message += ' \u{000e0000}';
             }
