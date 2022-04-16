@@ -16,7 +16,7 @@ const botOwnerID = process.env.BOT_OWNER_ID;
 const botPrefix = process.env.BOT_PREFIX;
 const wakeUpChannel = process.env.WAKE_UP_CHANNEL;
 const privilagedUsersID = process.env.PRIVILAGED_USERS_ID.split(' ');
-const globalCooldown = 1000;
+const globalCooldown = 1250;
 
 // the list of channels the bot will join
 const twitchChannels = process.env.TWITCH_CHANNELS.split(' ');
@@ -44,8 +44,10 @@ client.joinAll(twitchChannels);
 
 // commands
 let { commands } = require('./commands/exportCommands.js');
-let lastMessage;
+let lastMessage = "";
 let onGlobalCooldown = false;
+let finalMessage;
+let commandQueue = 1;
 client.on('PRIVMSG', (msg) => {
 
   // display all messages from chats in the terminal
@@ -54,7 +56,10 @@ client.on('PRIVMSG', (msg) => {
   // save bot's last message
   if(msg.displayName === botDisplayName){
     onGlobalCooldown = true;
-    setTimeout(() => { onGlobalCooldown = false;},  globalCooldown); 
+    commandQueue++;
+    setTimeout(() => { 
+      onGlobalCooldown = false; ;
+    }, globalCooldown); 
     lastMessage = msg.messageText;
   }
 
@@ -64,21 +69,19 @@ client.on('PRIVMSG', (msg) => {
   }
 
   // if the global cooldown is on, go back, I should add some queue later on
-  if(onGlobalCooldown){
+  //if(onGlobalCooldown){
+  //  return;
+  //}
+
+  // check if prefix is used or if the bot is the author of the message
+  if(!msg.messageText.startsWith(botPrefix) || msg.senderUsername === botDisplayName){
     return;
-  }
-
-  // check if prefix is used or if the bot is the author
-  const hasPrefix = msg.messageText.startsWith(botPrefix);
-
-  if(!hasPrefix || msg.senderUsername === botDisplayName){
-    return
   }
 
   // prefix used
 
   const msgArraySplit = msg.messageText.substring(botPrefix.length).split(' ');
-  const usedCommand = msgArraySplit[0];
+  const usedCommand = msgArraySplit[0].toLowerCase;
   const usedCommandArguments = msgArraySplit.slice(1);
   const command = commands.find(command => command.commandName === usedCommand);
 
@@ -98,10 +101,30 @@ client.on('PRIVMSG', (msg) => {
     lastMessage: lastMessage
   }
 
+  function sendMessage(finalMessage) {
+    if(command.commandName !== 'say'){
+      finalMessage = command(commandOptions);
+      if(finalMessage === lastMessage){
+        finalMessage += ' \u{000e0000}';
+    }
+      client.say(msg.channelName, finalMessage);
+    }
+    else{
+      command(commandOptions);
+    }
+  }
+
   // call the command's function
-  command(commandOptions);
-  if(msg.displayName === botDisplayName){
-    onGlobalCooldown = true;
-    setTimeout(() => { onGlobalCooldown = false;},  globalCooldown); 
+  if(!onGlobalCooldown){
+    sendMessage(finalMessage);
+  }
+  else{
+    setTimeout(() => {
+      sendMessage(finalMessage);
+      commandQueue--;
+      if(commandQueue<1){
+        commandQueue=1;
+      }
+    }, globalCooldown * commandQueue);
   }
 });

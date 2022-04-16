@@ -54,5 +54,6 @@ command.commandName = 'say';
 command.description = 'Makes the bot say the exact line, for now only for use by the bot owner and privilaged users. \
                        If the first argument is a channel this bot has joined, it will say it in that channel \
                        Bot owner only: also allows for remote built-in command execution';
+command.userCooldown = 10000; // in milliseconds
 
 module.exports = command;
