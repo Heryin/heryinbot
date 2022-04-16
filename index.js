@@ -81,7 +81,7 @@ client.on('PRIVMSG', (msg) => {
   // prefix used
 
   const msgArraySplit = msg.messageText.substring(botPrefix.length).split(' ');
-  const usedCommand = msgArraySplit[0].toLowerCase;
+  const usedCommand = msgArraySplit[0];
   const usedCommandArguments = msgArraySplit.slice(1);
   const command = commands.find(command => command.commandName === usedCommand);
 
