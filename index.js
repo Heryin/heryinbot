@@ -63,10 +63,10 @@ client.on('PRIVMSG', (msg) => {
     lastMessage = msg.messageText;
   }
 
-  // pajaS alert for #pajlada, based on pajbot's timer, as a meme response
-  if(msg.displayName === 'pajbot' && msg.messageText === 'pajaS 🚨 ALERT' && msg.channelName === 'pajlada'){
-    client.me(msg.channelName, "DANKOMEGA 🚨 O JA PIERDOLE");
-  }
+  // pajaS alert for #pajlada, based on pajbot's timer, as a meme response | RETIRED
+  //if(msg.displayName === 'pajbot' && msg.messageText === 'pajaS 🚨 ALERT' && msg.channelName === 'pajlada'){
+  //  client.me(msg.channelName, "DANKOMEGA 🚨 O JA PIERDOLE");
+  //}
 
   // if the global cooldown is on, go back, I should add some queue later on
   //if(onGlobalCooldown){
