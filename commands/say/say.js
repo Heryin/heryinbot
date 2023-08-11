@@ -12,41 +12,27 @@ function command({client: client, msg: msg, arguments: arguments, botOwnerID: bo
         if (twitchChannels.includes(remoteChannel) && msg.senderUserID === botOwnerID) {
 
                 let message = arguments.slice(1).join(' ');
-
-                if (message === lastMessage) {
-                    message += ' \u{000e0000}';
-                }
                 client.privmsg(remoteChannel, message);
         }
 
-            else if(msg.senderUserID === botOwnerID){
+        else if(msg.senderUserID === botOwnerID || msg.senderUserID === 31400525){
 
-                let message = arguments.join(' ');
+            let message = arguments.join(' ');
+                client.privmsg(msg.channelName, message);
+        }
 
-                    if (message === lastMessage) {
-                        message += ' \u{000e0000}';
-                    }
-                    client.privmsg(msg.channelName, message);
+        else if(!twitchChannels.includes(remoteChannel) || twitchChannels.includes(remoteChannel)){
+
+            let message = arguments.join(' ');
+            let messageSliced = arguments.slice(1).join(' ');
+
+            if (meMessage) {
+                client.me(msg.channelName, `\u{000e0000} ${messageSliced}`);
             }
-
-            else if(!twitchChannels.includes(remoteChannel) || twitchChannels.includes(remoteChannel)){
-
-                let message = arguments.join(' ');
-                let messageSliced = arguments.slice(1).join(' ');
-
-                if (meMessage) {
-                    if (messageSliced === lastMessage) {
-                        messageSliced += ' \u{000e0000}';
-                    }
-                    client.me(msg.channelName, `\u{000e0000} ${messageSliced}`);
-                }
-                else {
-                    if (message === lastMessage) {
-                        message += ' \u{000e0000}';
-                    }
-                    client.say(msg.channelName, `\u{000e0000} ${message}`);
-                }
+            else {
+                client.say(msg.channelName, `\u{000e0000} ${message}`);
             }
+        }
         }
 }
 
